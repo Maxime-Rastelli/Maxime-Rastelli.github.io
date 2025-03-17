@@ -1,0 +1,18 @@
+article.amiibo{
+    display: flex;
+    background-color:lightgray;
+}
+article.amiibo div{
+    display: flex;
+    flex-direction: column;
+}
+
+article.amiibo div.info img{
+    width: 60%;
+}
+
+div.action{
+    display: flex;
+    justify-content: space-between;
+}
+
