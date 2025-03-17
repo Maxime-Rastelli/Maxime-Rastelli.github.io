@@ -1,0 +1,72 @@
+nav{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    align-items: flex-end;
+    margin-left: 3%;
+}
+
+.bi-house-fill{
+    width: 4.5%;
+    height: 4.5%;
+}
+
+h1{
+    margin: 0%;
+    font-size: 300%;
+}
+
+/* ******************************************* */
+main{
+    margin-left: 3%;
+}
+
+.series{
+    border-top: 1px solid grey;
+    margin-top: 3%;
+}
+.amiibo_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4%;
+}
+.amiibo{
+    width: 20%;
+    height: auto;
+    margin-bottom: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1%;
+    background-color: rgb(216, 200, 110);  
+    border: 1px solid rgb(216, 200, 110);
+    box-shadow: 4px 4px 10px grey;
+    border-radius: 5px;
+}
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.top img{
+    width: 50%;
+}
+
+.top svg{
+    width: 30%;
+    height: 30%;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.bottom img{
+    width: 30%;
+    height: 70%;
+}
+
+.bottom h3{
+    margin: 0%;
+}
