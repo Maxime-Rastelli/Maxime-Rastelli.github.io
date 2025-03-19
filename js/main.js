@@ -3,6 +3,8 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
-let amiibos = await controller.findAmiiboFromWord("kirby");
+let amiibos = await controller.findAmiiboFromWord("zelda");
 
-controller.showAmiibo(view.listAmiibo, amiibos);
+controller.showAmiibos(view.listAmiibo, amiibos);
+
+view.nbResults.textContent = Number.parseInt(amiibos.length);
