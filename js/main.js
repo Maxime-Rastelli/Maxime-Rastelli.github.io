@@ -3,7 +3,7 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
-let amiibos = await controller.findAmiiboFromWord("zelda");
+let amiibos = await controller.findAmiiboFromWord("kirby");
 
 controller.showAmiibos(view.listAmiibo, amiibos);
 
