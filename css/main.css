@@ -1,0 +1,155 @@
+@font-face {
+    font-family: "nintendo_m" ;
+    src: url("../fonts/contm.ttf");
+}
+@font-face {
+    font-family: "nintendo_l" ;
+    src: url("../fonts/contl.ttf");
+}
+
+body{
+    font-family: "nintendo_m";
+    height: 100vh;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+/********************* Partie filtre ***********************/
+
+.filters{
+    width: 20%;
+    margin-left: 1%;
+}
+
+.filters ul li {
+    list-style: none;
+    margin-top: 10%;
+    font-family: "nintendo_l";
+}
+
+.filters h1{
+    font-size: 170%;
+}
+
+/******************** Partie droite*********************** */
+.right{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    gap: 2%;
+    height: 15%;
+    align-items: center;
+    border: 1px solid black;
+    border-bottom: none;
+    padding: 0.5%;
+}
+.search_bar{
+    width: 50%;
+    height: 50%;
+}
+.search{
+    border: none;
+    background-color: transparent;
+    height: 75%;
+    width: 5%;
+    text-align: center;
+    cursor: pointer;
+}
+.search svg{
+    width: 65%;
+    height: 100%;
+}
+.collection{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #fe0016;
+    padding: 1%;
+    cursor: pointer;
+}
+.collection:hover{
+    background-color: #cc0314;
+}
+nav input{
+    width: 20%;
+}
+
+.amiibo_list{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 4%;
+    padding-bottom: 5%;
+    border: 1px solid black;
+    border-top: none;
+    height: 100%;
+}
+.amiibo{
+    width: 25%;
+    height: auto;
+    margin-top: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1%;
+    background-color: rgb(216, 200, 110);  
+    border: 1px solid rgb(216, 200, 110);
+    box-shadow: 4px 4px 10px grey;
+    border-radius: 5px;
+}
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.top img{
+    width: 50%;
+}
+
+.button_myFavorite{
+    width: 20%;
+    height: 30%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.button_myFavorite:hover svg{
+    color: rgb(39, 39, 39);
+}
+.button_myFavorite svg{
+    width: 100%;
+    height: 100%;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.button_myCollec{
+    width: 20%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.bottom img{
+    width: 100%;
+    height: 100%;
+}
+
+.bottom h3{
+    margin: 0%;
+}
