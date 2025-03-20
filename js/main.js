@@ -3,7 +3,10 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
-let amiibos = await controller.findAmiiboFromWord("kirby");
+const params = new URLSearchParams(window.location.search); 
+const search = params.get("search");
+
+let amiibos = await controller.findAmiiboFromWord(search);
 
 controller.showAmiibos(view.listAmiibo, amiibos);
 
