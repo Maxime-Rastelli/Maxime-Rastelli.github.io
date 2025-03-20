@@ -22,13 +22,26 @@ controller.showAmiibos(view.listAmiibo, amiibos);
 
 view.nbResults.textContent = Number.parseInt(amiibos.length);
 
+view.favorites = document.querySelectorAll(".button_myFavorite");
+view.favorites.forEach((favorite) => {
+    console.log(favorite.children[0]);
+})
+
+view.favorites.forEach((favorite) => {
+    favorite.addEventListener("click",{
+
+    });
+});
+
 view.btnSearch.addEventListener("click", async function () {
     newSearch();
 });
 
 view.inputSearch.addEventListener("keydown", async function(event){
     if(event.key == "Enter"){
-        newSearch()
+        newSearch();
     }
 })
+
+
 
