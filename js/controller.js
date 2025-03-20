@@ -56,12 +56,48 @@ export class Controller{
         
     }
 
-    filterAmiibo(filters,amiibos){
+    filterAmiibo(amiibos){
+        let liste_amiibo=[];
+
+        // Filtre categories
+        _activeFilters.type.forEach(type => {
+            let amiibosCat = fetch("https://www.amiiboapi.com/api/amiibo/?type=" + type)
+            .then((element) => element.json())
+            .catch((err) => console.error(err));})
+
+        // Filtre serie
+        _activeFilters.series.forEach(serie => {
+            let amiibosSerie = fetch("https://www.amiiboapi.com/api/amiibo/?gameSeries=" + serie)
+            .then((element) => element.json())
+            .catch((err) => console.error(err));})
+
+        // Filtres favoris et collection activés
+        if(this._activeFilters.favorites==true && this._activeFilters.collection==true){
+            amiibos.forEach(amiibo => {
+                if(amiibo.isInFavorite()&& amiibo.isInCollection()){
+                    liste_amiibo.push(amiibo);
+                }
+            })}
+        
+        // Filtres favoris
+        else if(this._activeFilters.collection==true){
+            amiibos.forEach(amiibo => {
+                if(amiibo.isInFavorite()){
+                    liste_amiibo.push(amiibo);
+                }
+            })}
+        // Filtres collection
+        else if(this._activeFilters.collection==true){
+            amiibos.forEach(amiibo => {
+                if(amiibo.isInCollection()){
+                    liste_amiibo.push(amiibo);
+                }
+            })}
 
     }
 
     async showAmiiboBySeries(){
-
+        
     }
 
     addToCollection(amiibo){
