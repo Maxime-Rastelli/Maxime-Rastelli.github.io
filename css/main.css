@@ -90,7 +90,7 @@ nav input{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 4%;
+    gap: 20px;
     padding-bottom: 5%;
     border: 1px solid black;
     border-top: none;
