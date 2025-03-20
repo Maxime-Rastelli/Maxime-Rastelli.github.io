@@ -41,7 +41,5 @@ view.inputSearch.addEventListener("keydown", async function(event){
     if(event.key == "Enter"){
         newSearch();
     }
-})
-
-
+});
 
