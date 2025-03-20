@@ -86,3 +86,8 @@ main{
 .warning{
     text-align: right;
 }
+
+.invalid_input{
+    color: #cc0314;
+    visibility: hidden;
+}
