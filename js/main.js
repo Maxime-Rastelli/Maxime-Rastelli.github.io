@@ -71,6 +71,24 @@ view.amiibos.forEach((amiibo) => {
         }
 
         // Ajout dans la collection
+        let id = amiibo.getAttribute('id');
+
+        let myCollection = JSON.parse(localStorage.getItem("collection")) || [];
+
+        // Vérifie si l'ID est déjà dans la collection
+        if (myCollection.includes(id)) {
+            // Si l'ID est déjà là, on le supprime (toggle)
+            myCollection = myCollection.filter(favId => favId !== id);
+        } else {
+            // Sinon, on l'ajoute
+            myCollection.push(id);
+        }
+
+        // Sauvegarde la nouvelle liste dans le Local Storage
+        localStorage.setItem("collection", JSON.stringify(myCollection));
+
+        console.log("Collection updated:", myCollection); // Pour vérifier dans la console
+    
         
         
     });

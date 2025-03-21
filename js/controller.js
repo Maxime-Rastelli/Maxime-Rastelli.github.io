@@ -46,7 +46,7 @@ export class Controller{
     }
 
     async showAmiibos(div,amiibos){
-        div.innerHTML = "";
+        //div.innerHTML = "";
         let i = 1;
         amiibos.forEach(amiibo => {
             console.log("processing :" + i + "/" + amiibos.length);
@@ -57,8 +57,15 @@ export class Controller{
             if (favorites.includes(amiibo["tail"])) {
                 star="#273791";
             }
+
+            // Vérifie si l'ID de l'amiibo est déjà dans la collection
+            let collection = JSON.parse(localStorage.getItem("collection")) || [];
+            let img="../img/amiibo_black.svg"; //couleur de l'étoile
+            if (collection.includes(amiibo["tail"])) {
+                img="../img/amiibo.svg";
+            }
             
-            div.innerHTML += '<article class="amiibo" id=' + amiibo["tail"] + '><div class="top"><img src=' + amiibo["image"] +' alt=""><button class="button_myFavorite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" color='+ star +' viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg></button></div><div class="bottom"><h3>' + amiibo["name"] + '</h3><button class="button_myCollec"><img src="../img/amiibo_black.svg" alt=""></button></div></article>'
+            div.innerHTML += '<article class="amiibo" id=' + amiibo["tail"] + '><div class="top"><img src=' + amiibo["image"] +' alt=""><button class="button_myFavorite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" color='+ star +' viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg></button></div><div class="bottom"><h3>' + amiibo["name"] + '</h3><button class="button_myCollec"><img src=' + img+ ' alt=""></button></div></article>'
             });
         
     }
@@ -87,7 +94,7 @@ export class Controller{
             })}
         
         // Filtres favoris
-        else if(this._activeFilters.collection==true){
+        else if(this._activeFilters.favorites==true){
             amiibos.forEach(amiibo => {
                 if(amiibo.isInFavorite()){
                     liste_amiibo.push(amiibo);
@@ -104,14 +111,60 @@ export class Controller{
     }
 
     async showAmiiboBySeries(main){
-        main.innerHTML = "";
-        Object.entries(this._collection).forEach(([key,value]) => {
-            main.innerHTML += '<div class="series"><h2>' + key + '</h2>';
-            value.forEach((amiibo) => {
-                main.innerHTML += '<article class="amiibo"><div class="top"><img src=' + amiibo["image"] +' alt=""><button class="button_myFavorite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.56.56 0 0 0-.163-.505L1.71 6.745l4.052-.576a.53.53 0 0 0 .393-.288L8 2.223l1.847 3.658a.53.53 0 0 0 .393.288l4.052.575-2.906 2.77a.56.56 0 0 0-.163.506l.694 3.957-3.686-1.894a.5.5 0 0 0-.461 0z"/></svg></button></div><div class="bottom"><h3>' + amiibo["name"] + '</h3><button class="button_myCollec"><img src="../img/amiibo_black.svg" alt=""></button></div></article>'
-            });
-            main.innerHTML += '</div>'
+
+        //Recuperation des données
+        let idCollec = JSON.parse(localStorage.getItem("collection")) || [];
+
+        // Récupérer les données des amiibos (attendre toutes les requêtes)
+        let listeAmiiboCollec = await Promise.all(
+            idCollec.map(id => fetch("https://www.amiiboapi.com/api/amiibo/?tail=" + id)
+                .then(response => response.json())) // Convertir en JSON
+        );
+        
+        let serie = new Map();
+
+        listeAmiiboCollec.forEach((amiiboData) => {
+            let amiibo = amiiboData.amiibo[0]; // L'API retourne un objet contenant un tableau "amiibo"
+
+            if (!amiibo) return; // Sécurité si l'API ne retourne rien
+
+            let seriesName = amiibo["amiiboSeries"]; // Nom de la série
+
+            if (serie.has(seriesName)) {
+                if (!serie.get(seriesName).includes(amiibo)) {
+                    serie.get(seriesName).push(amiibo);
+                }
+            } else {
+                serie.set(seriesName, [amiibo]);
+            }
         });
+        
+        for (var [key, value] of serie) {
+            
+            console.log(key + " goes " + value[0]["character"]);
+          }// Vérification du résultat
+          
+        //Affichage
+        for (var [nom, amiibos] of serie) {
+            let div = document.createElement("div");
+            div.classList.add("series");
+
+            let title = document.createElement("h2");
+            title.textContent = nom;
+
+            let amiiboList = document.createElement("div");
+            
+            div.appendChild(title); // Ajouter le titre
+            div.appendChild(amiiboList); // Ajouter la liste d'amiibos
+
+            amiiboList.classList.add("amiibo_list");
+            for (let i=0; i<amiibos.length;i++){
+                await this.showAmiibos(div,[amiibos[i]]);
+            }
+
+            main.appendChild(div);
+          }
+
     }
 
     addToCollection(amiibo){
