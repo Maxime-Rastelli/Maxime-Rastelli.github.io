@@ -3,6 +3,7 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
+//récupération de la valeur recherché
 const params = new URLSearchParams(window.location.search); 
 const search = params.get("search");
 
@@ -14,20 +15,22 @@ let newSearch = async function() {
     view.nbResults.textContent = Number.parseInt(amiibos.length);
 }
 
+//ajout de la valeur dans la barre de recherche
 view.inputSearch.value = search;
 
 let amiibos = await controller.findAmiiboFromWord(search);
 
-controller.showAmiibos(view.listAmiibo, amiibos);
+await controller.showAmiibos(view.listAmiibo, amiibos);
 
 view.nbResults.textContent = Number.parseInt(amiibos.length);
 
 view.amiibos = document.querySelectorAll(".amiibo");
 view.amiibos.forEach((amiibo) => {
     console.log(amiibo.children[0]);
-})
+});
 
 view.amiibos.forEach((amiibo) => {
+    console.log(amiibo.querySelector(".button_myFavorite"));
     // Boutons favoris
     let favorite = amiibo.querySelector(".button_myFavorite");
     favorite.addEventListener("click", () => {
@@ -74,22 +77,16 @@ view.amiibos.forEach((amiibo) => {
         let id = amiibo.getAttribute('id');
 
         let myCollection = JSON.parse(localStorage.getItem("collection")) || [];
-
-        // Vérifie si l'ID est déjà dans la collection
         if (myCollection.includes(id)) {
-            // Si l'ID est déjà là, on le supprime (toggle)
-            myCollection = myCollection.filter(favId => favId !== id);
+            myCollection = myCollection.filter(favId => favId !== id); // Supprime
         } else {
-            // Sinon, on l'ajoute
-            myCollection.push(id);
+            myCollection.push(id); // Ajoute
         }
-
-        // Sauvegarde la nouvelle liste dans le Local Storage
-        localStorage.setItem("collection", JSON.stringify(myCollection));
-
-        console.log("Collection updated:", myCollection); // Pour vérifier dans la console
-    
         
+        // Sauvegarde dans localStorage
+        localStorage.setItem("collection", JSON.stringify(myCollection));
+        
+        console.log("Collection updated:", myCollection);
         
     });
 });
@@ -103,4 +100,3 @@ view.inputSearch.addEventListener("keydown", async function(event){
         newSearch();
     }
 });
-

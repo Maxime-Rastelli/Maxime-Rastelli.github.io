@@ -25,3 +25,5 @@ view.inputSearch.addEventListener("keydown", async function(event){
         search();
     }
 });
+
+console.log(view.inputSearch.style.display);
