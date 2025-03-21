@@ -3,6 +3,7 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
+//récupération de la valeur recherché
 const params = new URLSearchParams(window.location.search); 
 const search = params.get("search");
 
@@ -14,6 +15,7 @@ let newSearch = async function() {
     view.nbResults.textContent = Number.parseInt(amiibos.length);
 }
 
+//ajout de la valeur dans la barre de recherche
 view.inputSearch.value = search;
 
 let amiibos = await controller.findAmiiboFromWord(search);
@@ -42,4 +44,3 @@ view.inputSearch.addEventListener("keydown", async function(event){
         newSearch();
     }
 });
-
