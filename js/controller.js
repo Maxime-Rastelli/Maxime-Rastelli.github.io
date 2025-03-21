@@ -184,10 +184,12 @@ export class Controller{
             div.appendChild(amiiboList); // Ajouter la liste d'amiibos
 
             amiiboList.classList.add("amiibo_list");
+            let article=document.createElement("article");
             for (let i=0; i<amiibos.length;i++){
-                await this.showAmiibos(div,[amiibos[i]]);
+                
+                await this.showAmiibos(article,[amiibos[i]]);
             }
-
+            div.append(article);
             main.appendChild(div);
           }
 
