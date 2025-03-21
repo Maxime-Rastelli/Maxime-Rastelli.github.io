@@ -20,16 +20,17 @@ view.inputSearch.value = search;
 
 let amiibos = await controller.findAmiiboFromWord(search);
 
-controller.showAmiibos(view.listAmiibo, amiibos);
+await controller.showAmiibos(view.listAmiibo, amiibos);
 
 view.nbResults.textContent = Number.parseInt(amiibos.length);
 
 view.amiibos = document.querySelectorAll(".amiibo");
 view.amiibos.forEach((amiibo) => {
     console.log(amiibo.children[0]);
-})
+});
 
 view.amiibos.forEach((amiibo) => {
+    console.log(amiibo.querySelector(".button_myFavorite"));
     // Boutons favoris
     let favorite = amiibo.querySelector(".button_myFavorite");
     favorite.addEventListener("click", () => {
@@ -73,7 +74,19 @@ view.amiibos.forEach((amiibo) => {
         }
 
         // Ajout dans la collection
+        let id = amiibo.getAttribute('id');
+
+        let myCollection = JSON.parse(localStorage.getItem("collection")) || [];
+        if (myCollection.includes(id)) {
+            myCollection = myCollection.filter(favId => favId !== id); // Supprime
+        } else {
+            myCollection.push(id); // Ajoute
+        }
         
+        // Sauvegarde dans localStorage
+        localStorage.setItem("collection", JSON.stringify(myCollection));
+        
+        console.log("Collection updated:", myCollection);
         
     });
 });
