@@ -137,6 +137,8 @@ export class Controller{
     }
 
     async showAmiiboBySeries(main){
+        
+        main.innerHTML = '<div class="loading"><img src="../img/loading.gif" alt="Chargement..."></div>';
 
         //Recuperation des données
         let idCollec = JSON.parse(localStorage.getItem("collection")) || [];
@@ -146,7 +148,7 @@ export class Controller{
             idCollec.map(id => fetch("https://www.amiiboapi.com/api/amiibo/?tail=" + id)
                 .then(response => response.json())) // Convertir en JSON
         );
-        
+        main.innerHTML = "";
         let serie = new Map();
 
         listeAmiiboCollec.forEach((amiiboData) => {

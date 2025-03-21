@@ -107,3 +107,10 @@ main{
 .bottom h3{
     margin: 0%;
 }
+.loading img{
+    width: 60px;
+    height: 60px;
+    position: relative;
+    top: 250px;
+    right: -100px;
+}
