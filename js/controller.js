@@ -29,7 +29,7 @@ export class Controller{
         .then((elementSeries) => elementSeries.json())
         .catch((err) => console.error(err));
 
-        let amiibosCharacter = await fetch("https://www.amiiboapi.com/api/amiibo/?character=" + recherche + + "&showusage")
+        let amiibosCharacter = await fetch("https://www.amiiboapi.com/api/amiibo/?character=" + recherche + "&showusage")
         .then((elementChar) => elementChar.json())
         .catch((err) => console.error(err));
 

@@ -141,8 +141,8 @@ nav input{
     align-items: flex-end;
 }
 .button_myCollec{
-    width: 20%;
-    height: 100%;
+    width: 60px;
+    height: 40px;
     border: none;
     background: transparent;
     cursor: pointer;
@@ -154,4 +154,9 @@ nav input{
 
 .bottom h3{
     margin: 0%;
+}
+
+.loading img{
+    width: 60px;
+    height: 60px;
 }

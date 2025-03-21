@@ -11,7 +11,7 @@ let newSearch = async function() {
     const nouvelleURL = "main.html?search=" + view.inputSearch.value;
     history.replaceState({}, "", nouvelleURL);
     amiibos = await controller.findAmiiboFromWord(view.inputSearch.value);
-    controller.showAmiibos(view.listAmiibo, amiibos);
+    await controller.showAmiibos(view.listAmiibo, amiibos);
     view.nbResults.textContent = Number.parseInt(amiibos.length);
 }
 
