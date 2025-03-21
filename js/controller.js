@@ -179,17 +179,15 @@ export class Controller{
             title.textContent = nom;
 
             let amiiboList = document.createElement("div");
+            amiiboList.classList.add("amiibo_list");
 
             div.appendChild(title); // Ajouter le titre
-            div.appendChild(amiiboList); // Ajouter la liste d'amiibos
 
-            amiiboList.classList.add("amiibo_list");
-            let article=document.createElement("article");
             for (let i=0; i<amiibos.length;i++){
                 
-                await this.showAmiibos(article,[amiibos[i]]);
+                await this.showAmiibos(amiiboList,[amiibos[i]]);
             }
-            div.append(article);
+            div.appendChild(amiiboList); // Ajouter la liste d'amiibos
             main.appendChild(div);
           }
 
