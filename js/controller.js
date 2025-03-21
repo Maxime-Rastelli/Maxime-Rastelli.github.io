@@ -137,7 +137,7 @@ export class Controller{
     }
 
     async showAmiiboBySeries(main){
-        
+
         main.innerHTML = '<div class="loading"><img src="../img/loading.gif" alt="Chargement..."></div>';
 
         //Recuperation des données
@@ -149,6 +149,7 @@ export class Controller{
                 .then(response => response.json())) // Convertir en JSON
         );
         main.innerHTML = "";
+
         let serie = new Map();
 
         listeAmiiboCollec.forEach((amiiboData) => {
@@ -168,8 +169,8 @@ export class Controller{
         });
         
         for (var [key, value] of serie) {
-            
-            console.log(key + " goes " + value[0]["character"]);
+            for (let i=0; i<value.length;i++){
+            console.log(key + " goes " + value[i]["character"]);}
           }// Vérification du résultat
           
         //Affichage

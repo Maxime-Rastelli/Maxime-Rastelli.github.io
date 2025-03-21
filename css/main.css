@@ -1,10 +1,10 @@
 @font-face {
     font-family: "nintendo_m" ;
-    src: url("../fonts/contm.ttf");
+    src: url("../fonts/contm.ttf"),url("../fonts/contm.woff2") format("woff2");
 }
 @font-face {
     font-family: "nintendo_l" ;
-    src: url("../fonts/contl.ttf");
+    src: url("../fonts/contl.ttf"),url("../fonts/contl.woff2") format("woff2");
 }
 
 body{

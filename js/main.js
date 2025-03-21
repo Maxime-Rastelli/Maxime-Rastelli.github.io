@@ -34,6 +34,7 @@ view.amiibos.forEach((amiibo) => {
     // Boutons favoris
     let favorite = amiibo.querySelector(".button_myFavorite");
     favorite.addEventListener("click", () => {
+        
         // Changement de couleur 
         const svg = favorite.querySelector("svg"); 
         
