@@ -26,8 +26,6 @@ let amiibosFiltered;
 
 await controller.showAmiibos(view.listAmiibo, amiibos);
 view.filters = await controller.showSeries(view.series, amiibos);
-console.log(view.filters);
-console.log(amiibos[0])
 
 view.nbResults.textContent = Number.parseInt(amiibos.length);
 
@@ -59,21 +57,19 @@ view.amiibos.forEach((amiibo) => {
         // Ajout dans les favoris
         let id = amiibo.getAttribute('id');
 
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
         // Vérifie si l'ID est déjà dans les favoris
-        if (favorites.includes(id)) {
+        if (controller._favorites.includes(id)) {
             // Si l'ID est déjà là, on le supprime (toggle)
-            favorites = favorites.filter(favId => favId !== id);
+            controller._favorites = controller._favorites.filter(favId => favId !== id);
         } else {
             // Sinon, on l'ajoute
-            favorites.push(id);
+            controller._favorites.push(id);
         }
 
         // Sauvegarde la nouvelle liste dans le Local Storage
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        controller.saveStateToClient();
 
-        console.log("Favorites updated:", favorites); // Pour vérifier dans la console
+        console.log("Favorites updated:", controller._favorites); // Pour vérifier dans la console
     });
 
     // Boutons collection
@@ -90,17 +86,16 @@ view.amiibos.forEach((amiibo) => {
         // Ajout dans la collection
         let id = amiibo.getAttribute('id');
 
-        let myCollection = JSON.parse(localStorage.getItem("collection")) || [];
-        if (myCollection.includes(id)) {
-            myCollection = myCollection.filter(favId => favId !== id); // Supprime
+        if (controller._collection.includes(id)) {
+            controller._collection = controller._collection.filter(favId => favId !== id); // Supprime
         } else {
-            myCollection.push(id); // Ajoute
+            controller._collection.push(id); // Ajoute
         }
         
         // Sauvegarde dans localStorage
-        localStorage.setItem("collection", JSON.stringify(myCollection));
+        controller.saveStateToClient();
         
-        console.log("Collection updated:", myCollection);
+        console.log("Collection updated:", controller._collection);
         
     });
 });
@@ -116,9 +111,7 @@ view.inputSearch.addEventListener("keydown", async function(event){
 });
 
 view.btnFilter.addEventListener("click", async function(){
-    controller.resetFilters();
     view.filters.forEach((filter) => {
-        console.log(filter.name);
         if(filter.checked){
             if(filter.name == "Favorites"){
                 controller._activeFilters.favorites = true;
