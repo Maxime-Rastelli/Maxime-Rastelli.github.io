@@ -15,6 +15,8 @@ export const view = {
 
     series: document.querySelector(".series"),
 
+    btnReset: document.querySelector(".reset"),
+
     favorites: null,
 
     collection: null

@@ -161,7 +161,7 @@ nav input{
     height: 60px;
 }
 
-.filtering{
+.filtering, .reset{
     text-decoration: none;
     color: white;
     font-weight: bold;
