@@ -3,14 +3,14 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 controller.retrieveStateFromClient();
-controller.showAmiiboBySeries(view.listAmiibo);
+await controller.showAmiiboBySeries(view.listAmiibo);
 
 
 view.amiibos = document.querySelectorAll(".amiibo");
 view.amiibos.forEach((amiibo) => {
     console.log(amiibo.children[0]);
 });
-
+console.log(document.querySelectorAll(".amiibo"));
 view.amiibos.forEach((amiibo) => {
     console.log(amiibo.querySelector(".button_myFavorite"));
     // Boutons favoris
