@@ -15,7 +15,16 @@ let newSearch = async function() {
     amiibos = await controller.findAmiiboFromWord(view.inputSearch.value);
     await controller.showAmiibos(view.listAmiibo, amiibos);
     controller.showSeries(view.series, amiibos);
+    view.filters = await controller.showSeries(view.series, amiibos);
+    resetCheckbox();
     view.nbResults.textContent = Number.parseInt(amiibos.length);
+}
+
+let resetCheckbox = function(){
+    let filters = document.querySelectorAll("input[type=\"checkbox\"");
+    filters.forEach((filter) => {
+        filter.checked = false;
+    });
 }
 
 //ajout de la valeur dans la barre de recherche
@@ -111,6 +120,7 @@ view.inputSearch.addEventListener("keydown", async function(event){
 });
 
 view.btnFilter.addEventListener("click", async function(){
+    controller.resetFilters();
     view.filters.forEach((filter) => {
         if(filter.checked){
             if(filter.name == "Favorites"){
@@ -125,8 +135,10 @@ view.btnFilter.addEventListener("click", async function(){
             }
         }
     });
-
-    amiibosFiltered = await controller.filterAmiibo(amiibos);
+    amiibosFiltered = amiibos;
+    console.log(amiibosFiltered);
+    amiibosFiltered = await controller.filterAmiibo(amiibosFiltered);
+    console.log(amiibosFiltered);
     await controller.showAmiibos(view.listAmiibo, amiibosFiltered);
     view.nbResults.textContent = Number.parseInt(amiibosFiltered.length);
 });
