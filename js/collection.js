@@ -4,6 +4,7 @@ import { Controller } from "./controller.js";
 let controller = new Controller();
 controller.showAmiiboBySeries(view.listAmiibo);
 
+
 view.amiibos = document.querySelectorAll(".amiibo");
 view.amiibos.forEach((amiibo) => {
     console.log(amiibo.children[0]);

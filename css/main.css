@@ -100,7 +100,7 @@ nav input{
 }
 .amiibo{
     width: 25%;
-    height: auto;
+    height: 350px;
     margin-top: 3%;
     display: flex;
     flex-direction: column;
