@@ -2,6 +2,7 @@ import { view } from "./view/viewCollection.js";
 import { Controller } from "./controller.js";
 
 let controller = new Controller();
+controller.retrieveStateFromClient();
 controller.showAmiiboBySeries(view.listAmiibo);
 
 
@@ -32,19 +33,17 @@ view.amiibos.forEach((amiibo) => {
         // Ajout dans les favoris
         let id = amiibo.getAttribute('id');
 
-        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
         // Vérifie si l'ID est déjà dans les favoris
-        if (favorites.includes(id)) {
+        if (controller._favorites.includes(id)) {
             // Si l'ID est déjà là, on le supprime (toggle)
-            favorites = favorites.filter(favId => favId !== id);
+            controller._favorites = controller._favorites.filter(favId => favId !== id);
         } else {
             // Sinon, on l'ajoute
-            favorites.push(id);
+            controller._favorites.push(id);
         }
 
         // Sauvegarde la nouvelle liste dans le Local Storage
-        localStorage.setItem("favorites", JSON.stringify(favorites));
+        controller.saveStateToClient();
 
         console.log("Favorites updated:", favorites); // Pour vérifier dans la console
     });
@@ -63,15 +62,14 @@ view.amiibos.forEach((amiibo) => {
         // Ajout dans la collection
         let id = amiibo.getAttribute('id');
 
-        let myCollection = JSON.parse(localStorage.getItem("collection")) || [];
-        if (myCollection.includes(id)) {
-            myCollection = myCollection.filter(favId => favId !== id); // Supprime
+        if (controller._collection.includes(id)) {
+            controller._collection = controller._collection.filter(favId => favId !== id); // Supprime
         } else {
-            myCollection.push(id); // Ajoute
+            controller._collection.push(id); // Ajoute
         }
         
         // Sauvegarde dans localStorage
-        localStorage.setItem("collection", JSON.stringify(myCollection));
+        controller.saveStateToClient();
         
         console.log("Collection updated:", myCollection);
         
