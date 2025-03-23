@@ -160,3 +160,17 @@ nav input{
     width: 60px;
     height: 60px;
 }
+
+.filtering{
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #fe0016;
+    padding: 10px;
+    cursor: pointer;
+    font-family: nintendo_m;
+}
