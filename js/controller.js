@@ -16,7 +16,7 @@ export class Controller{
     }
 
     saveStateToClient(){
-        localStorageStorage.setItem("favorites", JSON.stringify(this._favorites));
+        localStorage.setItem("favorites", JSON.stringify(this._favorites));
         localStorage.setItem("collection", JSON.stringify(this._collection));
     }
 
@@ -193,6 +193,7 @@ export class Controller{
           }
 
     }
+
 
     addToCollection(amiibo){
         this._collection[amiibo["gameSeries"]] = amiibo;
