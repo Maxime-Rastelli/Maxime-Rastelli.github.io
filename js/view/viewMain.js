@@ -9,6 +9,12 @@ export const view = {
 
     amiibos: document.querySelectorAll(".amiibo"),
 
+    filters: document.querySelectorAll("input[type='checkbox']"),
+
+    btnFilter: document.querySelector(".filtering"),
+
+    series: document.querySelector(".series"),
+
     favorites: null,
 
     collection: null

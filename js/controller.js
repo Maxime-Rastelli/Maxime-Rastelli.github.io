@@ -10,6 +10,15 @@ export class Controller{
         series: [],
     }
 
+    resetFilters(){
+        this._activeFilters = {
+            favorites: false,
+            collection: false,
+            type: [],
+            series: [],
+        };
+    }
+
     retrieveStateFromClient(){
         this._favorites = JSON.parse(localStorage.getItem("favorites"));
         this._collection = JSON.parse(localStorage.getItem("collection"));
@@ -96,44 +105,15 @@ export class Controller{
         }
     }
 
-    filterAmiibo(amiibos){
-        let liste_amiibo=[];
+    async filterAmiibo(amiibos){
+        return amiibos.filter((amiibo) => {
+            const isInFavorite = this._activeFilters.favorites == true ? this._favorites.includes(amiibo["tail"]) : true;
+            const isInCollection = this._activeFilters.collection == true ? this._collection.includes(amiibo["tail"]) : true;
+            const isInType = this._activeFilters.type.length > 0 ? this._activeFilters.type.includes(amiibo["type"]) : true;
+            const isInSeries = this._activeFilters.series.length > 0 ? this._activeFilters.series.includes(amiibo["amiiboSeries"]) : true;
 
-        // Filtre categories
-        _activeFilters.type.forEach(type => {
-            let amiibosCat = fetch("https://www.amiiboapi.com/api/amiibo/?type=" + type)
-            .then((element) => element.json())
-            .catch((err) => console.error(err));})
-
-        // Filtre serie
-        _activeFilters.series.forEach(serie => {
-            let amiibosSerie = fetch("https://www.amiiboapi.com/api/amiibo/?gameSeries=" + serie)
-            .then((element) => element.json())
-            .catch((err) => console.error(err));})
-
-        // Filtres favoris et collection activés
-        if(this._activeFilters.favorites==true && this._activeFilters.collection==true){
-            amiibos.forEach(amiibo => {
-                if(amiibo.isInFavorite()&& amiibo.isInCollection()){
-                    liste_amiibo.push(amiibo);
-                }
-            })}
-        
-        // Filtres favoris
-        else if(this._activeFilters.favorites==true){
-            amiibos.forEach(amiibo => {
-                if(amiibo.isInFavorite()){
-                    liste_amiibo.push(amiibo);
-                }
-            })}
-        // Filtres collection
-        else if(this._activeFilters.collection==true){
-            amiibos.forEach(amiibo => {
-                if(amiibo.isInCollection()){
-                    liste_amiibo.push(amiibo);
-                }
-            })}
-
+            return isInFavorite && isInCollection && isInType && isInSeries;
+        })
     }
 
     async showAmiiboBySeries(main){
@@ -194,6 +174,18 @@ export class Controller{
 
     }
 
+    async showSeries(ul,amiibos){
+        ul.innerHTML = "";
+        let series = [];
+        amiibos.forEach((amiibo) => {
+            if(!series.includes(amiibo["amiiboSeries"])){
+                ul.innerHTML += `<li><input type="checkbox" name="${amiibo["amiiboSeries"]}" id="${amiibo["amiiboSeries"]}">${amiibo["amiiboSeries"]}</li>`;
+                series.push(amiibo["amiiboSeries"]);
+            }
+        })
+
+        return document.querySelectorAll("input[type='checkbox']");
+    }
 
     addToCollection(amiibo){
         this._collection[amiibo["gameSeries"]] = amiibo;

@@ -3,6 +3,8 @@ import { Controller } from "./controller.js";
 
 let controller = new Controller();
 
+controller.retrieveStateFromClient();
+
 //récupération de la valeur recherché
 const params = new URLSearchParams(window.location.search); 
 const search = params.get("search");
@@ -12,6 +14,7 @@ let newSearch = async function() {
     history.replaceState({}, "", nouvelleURL);
     amiibos = await controller.findAmiiboFromWord(view.inputSearch.value);
     await controller.showAmiibos(view.listAmiibo, amiibos);
+    controller.showSeries(view.series, amiibos);
     view.nbResults.textContent = Number.parseInt(amiibos.length);
 }
 
@@ -19,18 +22,22 @@ let newSearch = async function() {
 view.inputSearch.value = search;
 
 let amiibos = await controller.findAmiiboFromWord(search);
+let amiibosFiltered;
 
 await controller.showAmiibos(view.listAmiibo, amiibos);
+view.filters = await controller.showSeries(view.series, amiibos);
+console.log(view.filters);
+console.log(amiibos[0])
 
 view.nbResults.textContent = Number.parseInt(amiibos.length);
 
 view.amiibos = document.querySelectorAll(".amiibo");
-view.amiibos.forEach((amiibo) => {
-    console.log(amiibo.children[0]);
-});
+// view.amiibos.forEach((amiibo) => {
+//     console.log(amiibo.children[0]);
+// });
 
 view.amiibos.forEach((amiibo) => {
-    console.log(amiibo.querySelector(".button_myFavorite"));
+    // console.log(amiibo.querySelector(".button_myFavorite"));
     // Boutons favoris
     let favorite = amiibo.querySelector(".button_myFavorite");
     favorite.addEventListener("click", () => {
@@ -106,4 +113,27 @@ view.inputSearch.addEventListener("keydown", async function(event){
     if(event.key == "Enter"){
         newSearch();
     }
+});
+
+view.btnFilter.addEventListener("click", async function(){
+    controller.resetFilters();
+    view.filters.forEach((filter) => {
+        console.log(filter.name);
+        if(filter.checked){
+            if(filter.name == "Favorites"){
+                controller._activeFilters.favorites = true;
+            }else if(filter.name == "Collection"){
+                controller._activeFilters.collection = true;
+            }else if(filter.name == "type"){
+                controller._activeFilters.type.push(filter.id);
+            }else{
+                controller._activeFilters.series.push(filter.id);
+                console.log(controller._activeFilters);
+            }
+        }
+    });
+
+    amiibosFiltered = await controller.filterAmiibo(amiibos);
+    await controller.showAmiibos(view.listAmiibo, amiibosFiltered);
+    view.nbResults.textContent = Number.parseInt(amiibosFiltered.length);
 });
