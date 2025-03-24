@@ -90,13 +90,13 @@ export class Controller{
                 div.innerHTML += `<article class="amiibo" id=${amiibo["tail"]}>
                     <div class="top">
                         <img src=${amiibo["image"]} alt="">
-                        <button class="button_myFavorite">
+                        <button class="button_myFavorite" title="Add to favorites">
                             ${star}
                         </button>
                     </div>
                         <div class="bottom">
                             <h3>${amiibo["name"]}</h3>
-                            <button class="button_myCollec">
+                            <button class="button_myCollec" title="Add to collection">
                                 <img src=${img} alt="">
                             </button>
                         </div>

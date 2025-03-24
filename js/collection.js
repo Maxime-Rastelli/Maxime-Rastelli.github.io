@@ -64,6 +64,7 @@ view.amiibos.forEach((amiibo) => {
 
         if (controller._collection.includes(id)) {
             controller._collection = controller._collection.filter(favId => favId !== id); // Supprime
+            amiibo.style.display = "none";
         } else {
             controller._collection.push(id); // Ajoute
         }
