@@ -1,7 +1,7 @@
 export class Controller{
-    _favorites = {};
+    _favorites = [];
 
-    _collection = {};
+    _collection = [];
 
     _activeFilters = {
         favorites: false,
@@ -20,8 +20,8 @@ export class Controller{
     }
 
     retrieveStateFromClient(){
-        this._favorites = JSON.parse(localStorage.getItem("favorites"));
-        this._collection = JSON.parse(localStorage.getItem("collection"));
+        this._favorites = JSON.parse(localStorage.getItem("favorites")) ?? [];
+        this._collection = JSON.parse(localStorage.getItem("collection")) ?? [];
     }
 
     saveStateToClient(){
@@ -185,6 +185,10 @@ export class Controller{
         })
 
         return document.querySelectorAll("input[type='checkbox']");
+    }
+
+    getFavorites(){
+        return this._favorites;
     }
 
     addToCollection(amiibo){
